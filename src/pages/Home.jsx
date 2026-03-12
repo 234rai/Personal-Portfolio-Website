@@ -485,27 +485,48 @@ function AboutSection() {
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.5 }}
-            className="relative flex justify-center items-center h-full min-h-[400px]"
+            className="relative flex justify-center items-center"
           >
-            <div className="relative w-full h-full flex items-center justify-center">
+            {/* Responsive scaling wrapper — the orbit visual is designed at 500×500px
+                and scales down proportionally on smaller screens */}
+            <div
+              className="relative"
+              style={{
+                width: 500,
+                height: 500,
+                transform: 'scale(clamp(0.6, calc(80vw / 500), 1))',
+                transformOrigin: 'center center',
+              }}
+            >
               {/* Glow effect */}
               <div className="absolute inset-0 bg-gradient-to-br from-electric/10 dark:from-electric/20 to-cyber/10 dark:to-cyber/20 rounded-full blur-3xl scale-75" />
 
-              {/* Profile image as the core */}
-              <div className="relative w-48 h-48 md:w-56 md:h-56 rounded-full overflow-hidden border-4 border-electric/20 dark:border-electric/30 bg-card/50 backdrop-blur-sm z-30 shadow-[0_0_30px_rgba(0,212,255,0.15)] dark:shadow-[0_0_30px_rgba(0,212,255,0.2)]">
+              {/* Profile image as the core — centered in the 500×500 design space */}
+              <div
+                className="absolute rounded-full overflow-hidden border-4 border-electric/20 dark:border-electric/30 bg-card/50 backdrop-blur-sm z-30 shadow-[0_0_30px_rgba(0,212,255,0.15)] dark:shadow-[0_0_30px_rgba(0,212,255,0.2)]"
+                style={{
+                  width: 224,
+                  height: 224,
+                  top: '50%',
+                  left: '50%',
+                  transform: 'translate(-50%, -50%)',
+                }}
+              >
                 <img
                   src={profilePhoto}
                   alt="Profile"
-                  className="w-full h-full object-cover object-top"
+                  className="w-full h-full object-cover"
+                  style={{ objectPosition: 'center 20%' }}
                 />
               </div>
 
               {/* Orbit System - animated nodes on elliptical paths */}
               <OrbitSystem />
 
-              {/* Floating badges */}
+              {/* Floating badges — fixed positions inside the 500×500 design unit */}
               <motion.div
-                className="absolute top-4 right-4 md:top-10 md:right-10 bg-card/90 dark:bg-card/80 backdrop-blur-md border border-border/60 dark:border-border rounded-xl px-4 py-2 shadow-lg z-20 hover:border-electric/40 hover:shadow-electric/10 transition-all duration-300 cursor-default"
+                className="absolute bg-card/90 dark:bg-card/80 backdrop-blur-md border border-border/60 dark:border-border rounded-xl px-4 py-2 shadow-lg z-20 hover:border-electric/40 hover:shadow-electric/10 transition-all duration-300 cursor-default"
+                style={{ top: 20, right: 30 }}
                 animate={{ y: [0, -10, 0] }}
                 transition={{ duration: 3, repeat: Infinity }}
                 whileHover={{ scale: 1.08 }}
@@ -517,7 +538,8 @@ function AboutSection() {
               </motion.div>
 
               <motion.div
-                className="absolute bottom-4 left-4 md:bottom-10 md:left-10 bg-card/90 dark:bg-card/80 backdrop-blur-md border border-border/60 dark:border-border rounded-xl px-4 py-2 shadow-lg z-20 hover:border-neon/40 hover:shadow-neon/10 transition-all duration-300 cursor-default"
+                className="absolute bg-card/90 dark:bg-card/80 backdrop-blur-md border border-border/60 dark:border-border rounded-xl px-4 py-2 shadow-lg z-20 hover:border-neon/40 hover:shadow-neon/10 transition-all duration-300 cursor-default"
+                style={{ bottom: 30, left: 30 }}
                 animate={{ y: [0, 10, 0] }}
                 transition={{ duration: 3, repeat: Infinity, delay: 0.5 }}
                 whileHover={{ scale: 1.08 }}
@@ -529,7 +551,8 @@ function AboutSection() {
               </motion.div>
 
               <motion.div
-                className="absolute top-1/2 -left-8 md:-left-12 -translate-y-1/2 bg-card/90 dark:bg-card/80 backdrop-blur-md border border-border/60 dark:border-border rounded-xl px-4 py-2 shadow-lg z-20 hover:border-orange-400/40 hover:shadow-orange-400/10 transition-all duration-300 cursor-default"
+                className="absolute bg-card/90 dark:bg-card/80 backdrop-blur-md border border-border/60 dark:border-border rounded-xl px-4 py-2 shadow-lg z-20 hover:border-orange-400/40 hover:shadow-orange-400/10 transition-all duration-300 cursor-default"
+                style={{ top: '50%', left: -20, transform: 'translateY(-50%)' }}
                 animate={{ y: [0, -8, 0] }}
                 transition={{ duration: 3.5, repeat: Infinity, delay: 1 }}
                 whileHover={{ scale: 1.08 }}
@@ -541,7 +564,8 @@ function AboutSection() {
               </motion.div>
 
               <motion.div
-                className="absolute top-1/2 -right-8 md:-right-12 -translate-y-1/2 bg-card/90 dark:bg-card/80 backdrop-blur-md border border-border/60 dark:border-border rounded-xl px-4 py-2 shadow-lg z-20 hover:border-purple-400/40 hover:shadow-purple-400/10 transition-all duration-300 cursor-default"
+                className="absolute bg-card/90 dark:bg-card/80 backdrop-blur-md border border-border/60 dark:border-border rounded-xl px-4 py-2 shadow-lg z-20 hover:border-purple-400/40 hover:shadow-purple-400/10 transition-all duration-300 cursor-default"
+                style={{ top: '50%', right: -20, transform: 'translateY(-50%)' }}
                 animate={{ y: [0, 8, 0] }}
                 transition={{ duration: 3.2, repeat: Infinity, delay: 1.5 }}
                 whileHover={{ scale: 1.08 }}
@@ -553,7 +577,8 @@ function AboutSection() {
               </motion.div>
 
               <motion.div
-                className="absolute -bottom-4 md:bottom-0 left-1/2 -translate-x-1/2 bg-card/90 dark:bg-card/80 backdrop-blur-md border border-border/60 dark:border-border rounded-xl px-4 py-2 shadow-lg z-20 hover:border-blue-400/40 hover:shadow-blue-400/10 transition-all duration-300 cursor-default"
+                className="absolute bg-card/90 dark:bg-card/80 backdrop-blur-md border border-border/60 dark:border-border rounded-xl px-4 py-2 shadow-lg z-20 hover:border-blue-400/40 hover:shadow-blue-400/10 transition-all duration-300 cursor-default"
+                style={{ bottom: -5, left: '50%', transform: 'translateX(-50%)' }}
                 animate={{ y: [0, -6, 0] }}
                 transition={{ duration: 2.8, repeat: Infinity, delay: 0.8 }}
                 whileHover={{ scale: 1.08 }}
