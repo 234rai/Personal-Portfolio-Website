@@ -490,28 +490,23 @@ function AboutSection() {
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.5 }}
-            className="relative flex justify-center items-center max-w-full overflow-hidden"
+            // FIX 1: Allow container to be responsive width, max 500px, centered
+            className="relative flex justify-center items-center w-full"
           >
-            {/* Responsive scaling wrapper — the orbit visual is designed at 500×500px
-                and scales down proportionally on smaller screens */}
             <div
-              className="relative"
-              style={{
-                width: 500,
-                height: 500,
-                transform: 'scale(clamp(0.6, calc(80vw / 500), 1))',
-                transformOrigin: 'center center',
-              }}
+              className="relative w-full max-w-[500px] aspect-square"
+            // FIX 2: Use aspect-square instead of fixed height. This creates a responsive square.
             >
               {/* Glow effect */}
               <div className="absolute inset-0 bg-gradient-to-br from-electric/10 dark:from-electric/20 to-cyber/10 dark:to-cyber/20 rounded-full blur-3xl scale-75" />
 
-              {/* Profile image as the core — centered in the 500×500 design space */}
+              {/* Profile image as the core — centered */}
               <div
                 className="absolute rounded-full overflow-hidden border-4 border-electric/20 dark:border-electric/30 bg-card/50 backdrop-blur-sm z-30 shadow-[0_0_30px_rgba(0,212,255,0.15)] dark:shadow-[0_0_30px_rgba(0,212,255,0.2)]"
                 style={{
-                  width: 224,
-                  height: 224,
+                  // Using percentages of the parent container for size
+                  width: '45%', // Approx 224px on 500px container
+                  height: '45%',
                   top: '50%',
                   left: '50%',
                   transform: 'translate(-50%, -50%)',
@@ -526,71 +521,78 @@ function AboutSection() {
               </div>
 
               {/* Orbit System - animated nodes on elliptical paths */}
+              {/* It will fill the aspect-square container perfectly */}
               <OrbitSystem />
 
-              {/* Floating badges — fixed positions inside the 500×500 design unit */}
+              {/* Floating badges — using Percentages for positioning to be mobile responsive */}
+
+              {/* Top Right Badge */}
               <motion.div
-                className="absolute bg-card/90 dark:bg-card/80 backdrop-blur-md border border-border/60 dark:border-border rounded-xl px-4 py-2 shadow-lg z-20 hover:border-electric/40 hover:shadow-electric/10 transition-all duration-300 cursor-default"
-                style={{ top: 20, right: 30 }}
+                className="absolute bg-card/90 dark:bg-card/80 backdrop-blur-md border border-border/60 dark:border-border rounded-xl px-3 py-1.5 shadow-lg z-20 hover:border-electric/40 hover:shadow-electric/10 transition-all duration-300 cursor-default"
+                style={{ top: "5%", right: "5%" }} // Changed from fixed pixels to %
                 animate={{ y: [0, -10, 0] }}
                 transition={{ duration: 3, repeat: Infinity }}
                 whileHover={{ scale: 1.08 }}
               >
-                <div className="flex items-center gap-2">
-                  <Terminal className="w-4 h-4 text-electric" />
-                  <span className="text-sm font-medium text-foreground">Full Stack</span>
+                <div className="flex items-center gap-1.5">
+                  <Terminal className="w-3.5 h-3.5 text-electric" />
+                  <span className="text-xs font-medium text-foreground">Full Stack Development</span>
                 </div>
               </motion.div>
 
+              {/* Bottom Left Badge */}
               <motion.div
-                className="absolute bg-card/90 dark:bg-card/80 backdrop-blur-md border border-border/60 dark:border-border rounded-xl px-4 py-2 shadow-lg z-20 hover:border-neon/40 hover:shadow-neon/10 transition-all duration-300 cursor-default"
-                style={{ bottom: 30, left: 30 }}
+                className="absolute bg-card/90 dark:bg-card/80 backdrop-blur-md border border-border/60 dark:border-border rounded-xl px-3 py-1.5 shadow-lg z-20 hover:border-neon/40 hover:shadow-neon/10 transition-all duration-300 cursor-default"
+                style={{ bottom: "5%", left: "5%" }} // Percent positioning
                 animate={{ y: [0, 10, 0] }}
                 transition={{ duration: 3, repeat: Infinity, delay: 0.5 }}
                 whileHover={{ scale: 1.08 }}
               >
-                <div className="flex items-center gap-2">
-                  <Database className="w-4 h-4 text-neon" />
-                  <span className="text-sm font-medium text-foreground">Architecture</span>
+                <div className="flex items-center gap-1.5">
+                  <Database className="w-3.5 h-3.5 text-neon" />
+                  <span className="text-xs font-medium text-foreground">Databases</span>
                 </div>
               </motion.div>
 
+              {/* Left Middle Badge */}
               <motion.div
-                className="absolute bg-card/90 dark:bg-card/80 backdrop-blur-md border border-border/60 dark:border-border rounded-xl px-4 py-2 shadow-lg z-20 hover:border-orange-400/40 hover:shadow-orange-400/10 transition-all duration-300 cursor-default"
-                style={{ top: '50%', left: -20, transform: 'translateY(-50%)' }}
-                animate={{ y: [0, -8, 0] }}
+                className="absolute bg-card/90 dark:bg-card/80 backdrop-blur-md border border-border/60 dark:border-border rounded-xl px-3 py-1.5 shadow-lg z-20 hover:border-orange-400/40 hover:shadow-orange-400/10 transition-all duration-300 cursor-default"
+                style={{ top: '50%', left: '0%', transform: 'translateY(-50%)' }} // Percent positioning
+                animate={{ x: [0, -5, 0] }} // Slight horizontal animation
                 transition={{ duration: 3.5, repeat: Infinity, delay: 1 }}
                 whileHover={{ scale: 1.08 }}
               >
-                <div className="flex items-center gap-2">
-                  <Zap className="w-4 h-4 text-orange-400" />
-                  <span className="text-sm font-medium text-foreground">Creativity</span>
+                <div className="flex items-center gap-1.5">
+                  <Zap className="w-3.5 h-3.5 text-orange-400" />
+                  <span className="text-xs font-medium text-foreground">Creativity</span>
                 </div>
               </motion.div>
 
+              {/* Right Middle Badge */}
               <motion.div
-                className="absolute bg-card/90 dark:bg-card/80 backdrop-blur-md border border-border/60 dark:border-border rounded-xl px-4 py-2 shadow-lg z-20 hover:border-purple-400/40 hover:shadow-purple-400/10 transition-all duration-300 cursor-default"
-                style={{ top: '50%', right: -20, transform: 'translateY(-50%)' }}
-                animate={{ y: [0, 8, 0] }}
+                className="absolute bg-card/90 dark:bg-card/80 backdrop-blur-md border border-border/60 dark:border-border rounded-xl px-3 py-1.5 shadow-lg z-20 hover:border-purple-400/40 hover:shadow-purple-400/10 transition-all duration-300 cursor-default"
+                style={{ top: '50%', right: '0%', transform: 'translateY(-50%)' }} // Percent positioning
+                animate={{ x: [0, 5, 0] }} // Slight horizontal animation
                 transition={{ duration: 3.2, repeat: Infinity, delay: 1.5 }}
                 whileHover={{ scale: 1.08 }}
               >
-                <div className="flex items-center gap-2">
-                  <Sparkles className="w-4 h-4 text-purple-400" />
-                  <span className="text-sm font-medium text-foreground">AI Enthusiast</span>
+                <div className="flex items-center gap-1.5">
+                  <Sparkles className="w-3.5 h-3.5 text-purple-400" />
+                  <span className="text-xs font-medium text-foreground">AI</span>
                 </div>
               </motion.div>
 
+              {/* Bottom Center Badge */}
               <motion.div
-                className="absolute bg-card/90 dark:bg-card/80 backdrop-blur-md border border-border/60 dark:border-border rounded-xl px-4 py-2 shadow-lg z-20 hover:border-blue-400/40 hover:shadow-blue-400/10 transition-all duration-300 cursor-default"
-                style={{ bottom: -5, left: '50%', transform: 'translateX(-50%)' }}
+                className="absolute bg-card/90 dark:bg-card/80 backdrop-blur-md border border-border/60 dark:border-border rounded-xl px-3 py-1.5 shadow-lg z-20 hover:border-blue-400/40 hover:shadow-blue-400/10 transition-all duration-300 cursor-default"
+                style={{ bottom: '0%', left: '50%', transform: 'translateX(-50%)' }} // Percent positioning
                 animate={{ y: [0, -6, 0] }}
                 transition={{ duration: 2.8, repeat: Infinity, delay: 0.8 }}
                 whileHover={{ scale: 1.08 }}
               >
-                <div className="flex items-center gap-2">
-                  <Code2 className="w-4 h-4 text-blue-400" />
-                  <span className="text-sm font-medium text-foreground">Mobile Development</span>
+                <div className="flex items-center gap-1.5">
+                  <Code2 className="w-3.5 h-3.5 text-blue-400" />
+                  <span className="text-xs font-medium text-foreground">Mobile App Development</span>
                 </div>
               </motion.div>
             </div>
@@ -624,6 +626,7 @@ function AboutSection() {
               </div>
             </div>
 
+            {/* Info Card Section - Fixed Alignment */}
             <div className="bg-white/5 dark:bg-white/5 backdrop-blur-lg border border-white/10 dark:border-white/10 shadow-[0_4px_30px_rgba(0,0,0,0.1)] hover:bg-white/10 dark:hover:bg-white/10 transition-all duration-300 rounded-xl p-6 group">
               <div className="space-y-3 text-sm md:text-base">
                 {[
@@ -631,17 +634,21 @@ function AboutSection() {
                   { label: "Focus", value: "Full Stack Development" },
                   { label: "Education", value: "B.Tech Information Technology" },
                 ].map((item, i) => (
-                  <div key={i} className="flex justify-between items-center">
-                    <span className="text-muted-foreground">{item.label}</span>
-                    <span className="text-foreground font-medium">{item.value}</span>
+                  <div
+                    key={i}
+                    // FIX 3: Changed items-center to items-start for proper multi-line alignment
+                    className="flex justify-between items-start gap-4"
+                  >
+                    <span className="text-muted-foreground shrink-0">{item.label}</span>
+                    <span className="text-foreground font-medium text-right">{item.value}</span>
                   </div>
                 ))}
               </div>
             </div>
           </motion.div>
         </div>
-      </div>
-    </section>
+      </div >
+    </section >
   );
 }
 
